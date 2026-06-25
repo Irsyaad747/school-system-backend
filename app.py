@@ -28,7 +28,10 @@ app.config[
 
 CORS(app)
 
-app.config["JWT_SECRET_KEY"] = "school-system-secret-key"
+app.config["JWT_SECRET_KEY"] = (
+    os.getenv("JWT_SECRET_KEY")
+    or "school-system-secret-key"
+)
 
 app.config[
     "JWT_ACCESS_TOKEN_EXPIRES"
@@ -37,8 +40,10 @@ app.config[
 
 jwt = JWTManager(app)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = \
-    "mysql+pymysql://root:@localhost/school_db"
+app.config["SQLALCHEMY_DATABASE_URI"] = (
+    os.getenv("MYSQL_URL")
+    or "mysql+pymysql://root:@localhost/school_db"
+)
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
