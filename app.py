@@ -40,8 +40,17 @@ app.config[
 
 jwt = JWTManager(app)
 
+database_url = os.getenv("MYSQL_URL")
+
+if database_url:
+    database_url = database_url.replace(
+        "mysql://",
+        "mysql+pymysql://",
+        1
+    )
+
 app.config["SQLALCHEMY_DATABASE_URI"] = (
-    os.getenv("MYSQL_URL")
+    database_url
     or "mysql+pymysql://root:@localhost/school_db"
 )
 
